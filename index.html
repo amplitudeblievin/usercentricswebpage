@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Usercentrics | Leading in Data Privacy & Compliance</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --uc-blue: #0066ff;
+      --uc-blue-dark: #0052cc;
+      --uc-green: #22c55e;
+      --uc-green-dark: #16a34a;
+      --uc-navy: #0a1628;
+      --uc-gray-100: #f5f7fa;
+      --uc-gray-200: #e4e8ec;
+      --uc-gray-600: #6b7280;
+      --uc-gray-800: #1f2937;
+      --uc-white: #ffffff;
+    }
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif; color: var(--uc-gray-800); line-height: 1.6; }
+    a { color: var(--uc-blue); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* Header */
+    .header {
+      position: sticky; top: 0; z-index: 100;
+      background: var(--uc-white); border-bottom: 1px solid var(--uc-gray-200);
+      padding: 12px 24px; display: flex; align-items: center; justify-content: space-between;
+    }
+    .logo { font-weight: 700; font-size: 1.25rem; color: var(--uc-navy); }
+    .nav { display: flex; align-items: center; gap: 24px; }
+    .nav a { color: var(--uc-gray-800); font-weight: 500; }
+    .btn { display: inline-flex; align-items: center; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
+    .btn-primary { background: var(--uc-green); color: white; }
+    .btn-primary:hover { background: var(--uc-green-dark); text-decoration: none; }
+
+    /* Banner */
+    .banner {
+      background: linear-gradient(135deg, #eef4ff 0%, #e0eaff 100%);
+      padding: 8px 24px; text-align: center; font-size: 0.875rem;
+    }
+    .banner a { font-weight: 600; }
+
+    /* Hero */
+    .hero {
+      background: linear-gradient(180deg, #f8fafc 0%, #fff 60%);
+      padding: 64px 24px 80px; text-align: center;
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.5rem); font-weight: 700; color: var(--uc-navy);
+      max-width: 800px; margin: 0 auto 20px; line-height: 1.2;
+    }
+    .hero p { font-size: 1.125rem; color: var(--uc-gray-600); max-width: 600px; margin: 0 auto 32px; }
+    .hero-cta { display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; align-items: center; }
+    .hero-cta .btn { font-size: 1rem; }
+    .hero-note { display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 16px; font-size: 0.875rem; color: var(--uc-gray-600); }
+
+    /* Section */
+    section { padding: 64px 24px; max-width: 1200px; margin: 0 auto; }
+    section h2 { font-size: 2rem; color: var(--uc-navy); margin-bottom: 32px; text-align: center; }
+    section h3 { font-size: 1.5rem; color: var(--uc-navy); margin-bottom: 16px; }
+
+    /* Product cards */
+    .products { display: grid; gap: 48px; }
+    .product-card {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: center;
+      padding: 48px; background: var(--uc-white); border-radius: 16px; border: 1px solid var(--uc-gray-200);
+    }
+    .product-card:nth-child(even) { direction: rtl; }
+    .product-card:nth-child(even) > * { direction: ltr; }
+    .product-card ul { margin: 16px 0; padding-left: 20px; }
+    .product-card li { margin-bottom: 8px; color: var(--uc-gray-600); }
+    .product-card .link { font-weight: 600; margin-top: 16px; display: inline-block; }
+    .product-visual { background: var(--uc-gray-100); border-radius: 12px; height: 280px; display: flex; align-items: center; justify-content: center; color: var(--uc-gray-600); font-size: 0.875rem; }
+
+    /* Tabs / Solutions */
+    .solutions-tabs { display: flex; flex-wrap: wrap; gap: 12px; justify-content: center; margin-bottom: 24px; }
+    .solutions-tabs span {
+      padding: 10px 20px; border-radius: 8px; background: var(--uc-gray-100); font-weight: 500; font-size: 0.875rem;
+    }
+    .solutions-tabs span:first-child { background: var(--uc-blue); color: white; }
+
+    /* Logos strip */
+    .logos { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; justify-content: center; margin-top: 32px; padding: 24px 0; border-top: 1px solid var(--uc-gray-200); }
+    .logos span { font-size: 0.875rem; color: var(--uc-gray-600); padding: 8px 16px; background: var(--uc-gray-100); border-radius: 6px; }
+
+    /* Stats */
+    .stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; text-align: center; padding: 48px 24px; background: var(--uc-gray-100); border-radius: 16px; }
+    .stats-item .number { font-size: 2rem; font-weight: 700; color: var(--uc-blue); display: block; }
+    .stats-item .label { font-size: 0.875rem; color: var(--uc-gray-600); margin-top: 4px; }
+
+    /* Industries */
+    .industries { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 20px; }
+    .industry-card { padding: 24px; background: var(--uc-white); border: 1px solid var(--uc-gray-200); border-radius: 12px; cursor: pointer; transition: box-shadow 0.2s; }
+    .industry-card:hover { box-shadow: 0 4px 12px rgba(0,0,0,0.08); }
+    .industry-card h4 { font-size: 1rem; margin-bottom: 8px; color: var(--uc-navy); }
+    .industry-card p { font-size: 0.875rem; color: var(--uc-gray-600); }
+
+    /* Testimonials */
+    .testimonials { display: grid; grid-template-columns: repeat(auto-fill, minmax(320px, 1fr)); gap: 24px; }
+    .testimonial { padding: 24px; background: var(--uc-white); border: 1px solid var(--uc-gray-200); border-radius: 12px; }
+    .testimonial p { font-size: 0.9375rem; color: var(--uc-gray-800); margin-bottom: 16px; }
+    .testimonial .author { font-weight: 600; font-size: 0.875rem; }
+    .testimonial .role { font-size: 0.8125rem; color: var(--uc-gray-600); }
+
+    /* Scanner CTA */
+    .scanner-cta { text-align: center; padding: 48px 24px; background: linear-gradient(135deg, #eef4ff 0%, #e0eaff 100%); border-radius: 16px; }
+    .scanner-cta h2 { margin-bottom: 12px; }
+    .scanner-cta p { color: var(--uc-gray-600); margin-bottom: 24px; }
+    .scanner-form { display: flex; gap: 12px; max-width: 480px; margin: 0 auto 16px; }
+    .scanner-form input { flex: 1; padding: 12px 16px; border: 1px solid var(--uc-gray-200); border-radius: 8px; font-size: 1rem; }
+    .scanner-form .btn { flex-shrink: 0; }
+
+    /* Footer */
+    .footer { background: var(--uc-navy); color: var(--uc-gray-200); padding: 48px 24px; margin-top: 64px; }
+    .footer-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fill, minmax(180px, 1fr)); gap: 32px; }
+    .footer h4 { color: white; font-size: 0.875rem; margin-bottom: 16px; }
+    .footer a { color: var(--uc-gray-200); font-size: 0.875rem; display: block; margin-bottom: 8px; }
+    .footer a:hover { color: white; }
+
+    @media (max-width: 768px) {
+      .product-card { grid-template-columns: 1fr; gap: 24px; direction: ltr !important; }
+      .product-card:nth-child(even) { direction: ltr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <a href="#" class="logo">Usercentrics</a>
+    <nav class="nav">
+      <a href="#products">Products</a>
+      <a href="#solutions">Solutions</a>
+      <a href="#industries">Industries</a>
+      <a href="#pricing">Pricing</a>
+      <a href="#resources">Resources</a>
+      <a href="#" class="btn btn-primary">Start free</a>
+    </nav>
+  </header>
+
+  <div class="banner">
+    <strong>New</strong> Usercentrics acquires MCP Manager to bring consent and trust to AI. <a href="#">Learn more</a>
+  </div>
+
+  <main id="uc-main">
+    <section class="hero">
+      <h1>AUTOMATE PRIVACY COMPLIANCE. DRIVE MARKETING GROWTH.</h1>
+      <p>Automate privacy compliance, enhance audience insights and maximize marketing performance. Our solutions help you turn compliance into a business growth advantage.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Start free</a>
+        <a href="#" class="btn" style="background: var(--uc-gray-200); color: var(--uc-gray-800);">Explore Demo</a>
+      </div>
+      <div class="hero-note">No credit card required</div>
+      <p style="margin-top: 24px; font-size: 0.875rem;">See our solutions in action — Web CMP · App CMP · CTV CMP · Privacy Policy · Server-Side Tracking · MCP Manager · Preference manager</p>
+    </section>
+
+    <section id="products" class="products">
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics Web CMP</h3>
+          <p>A fully customizable, automated consent solution designed for SMBs and growing businesses. Streamline compliance with global privacy laws and ad tech requirements.</p>
+          <ul>
+            <li>Automate compliance by auto-blocking non-essential services with our extensive repository</li>
+            <li>Customize consent banners to build trust and boost engagement</li>
+            <li>Use analytics to optimize consented data for smarter marketing</li>
+          </ul>
+          <a href="#" class="link">LEARN MORE →</a>
+        </div>
+        <div class="product-visual">Web CMP</div>
+      </div>
+      <div class="logos">
+        <span>Delivery Hero</span><span>Burny Games</span><span>Hello Fresh</span><span>Sixt</span><span>DAK</span><span>Hermes</span><span>Douglas</span><span>ProSiebenSat.1</span>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics App CMP</h3>
+          <p>Secure your mobile apps and games monetization by complying with global data privacy regulations and frameworks like the GDPR, CCPA, TCF v2.2, and more.</p>
+          <ul>
+            <li>Enjoy a seamless user experience with our intuitive interface</li>
+            <li>Customize your consent banner for a consistent brand experience</li>
+            <li>Use detailed analytics and A/B testing to reach high consent rates</li>
+          </ul>
+          <a href="#" class="link">LEARN MORE →</a>
+        </div>
+        <div class="product-visual">App CMP</div>
+      </div>
+      <div class="logos">
+        <span>Boombit</span><span>Zynga</span><span>Ubisoft</span><span>Lessmore</span><span>Sixt</span>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics Privacy Policy Generator</h3>
+          <p>Build your custom privacy policy in minutes with our intelligent generator. Tailored to your website and tech setup and selected services.</p>
+          <ul>
+            <li>Align with key privacy law requirements, including the GDPR and US state regulations</li>
+            <li>Easily generate multiple policies for different domains or needs</li>
+            <li>Stay up to date with legal and technical changes through automated updates</li>
+          </ul>
+          <a href="#" class="link">LEARN MORE →</a>
+        </div>
+        <div class="product-visual">Privacy Policy Generator</div>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics Server-Side Tracking</h3>
+          <p>Improve campaign performance, strengthen your data quality, and reduce costs. Move to a first-party data strategy with our integrated suite.</p>
+          <ul>
+            <li><strong>Boost Meta performance with Meta Signals Gateway</strong> — high-quality web and offline signals</li>
+            <li><strong>Power multi-platform tracking with Server-Side Tagging</strong> for Google, Meta, TikTok, and more</li>
+          </ul>
+          <a href="#" class="link">Meta Signals Gateway</a> · <a href="#" class="link">Server-Side Tagging</a>
+        </div>
+        <div class="product-visual">Server-Side Tracking</div>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <h3>MCP Manager by Usercentrics</h3>
+          <p>A centralized governance layer for AI systems that access real business and consumer data. Control, monitor, and audit how AI uses data through the Model Context Protocol (MCP).</p>
+          <ul>
+            <li>Govern AI data access and gain end-to-end visibility with audit logs</li>
+            <li>Reduce security risks, AI access to PII, and overall token use</li>
+            <li>Enable compliant and cost-efficient AI adoption without AI expertise</li>
+          </ul>
+          <a href="#" class="link">Learn More →</a>
+        </div>
+        <div class="product-visual">MCP Manager</div>
+      </div>
+
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics Preference Manager</h3>
+          <p>Use a Preference Management Platform (PMP) to increase marketing ROI. Pass consent and preferences for zero- and first-party data directly to your advertising platform.</p>
+          <ul>
+            <li>Optimize retargeting and personalization campaigns with our easy and flexible implementation</li>
+            <li>Customize widgets and Preference Center to match your branding</li>
+            <li>Centralize users' consent and preference choices in a single platform</li>
+          </ul>
+          <a href="#" class="link">LEARN MORE →</a>
+        </div>
+        <div class="product-visual">Preference Manager</div>
+      </div>
+    </section>
+
+    <section id="solutions">
+      <h2>Website privacy compliance — built to grow with your business</h2>
+      <p style="text-align: center; color: var(--uc-gray-600); margin-bottom: 32px;">Two consent management solutions. One trusted privacy compliance foundation.</p>
+      <div class="solutions-tabs">
+        <span>Cookiebot Core CMP</span>
+        <span>Usercentrics Advanced CMP</span>
+      </div>
+      <div class="product-card">
+        <div>
+          <h3>Cookiebot Core CMP</h3>
+          <p>Effortless consent management for SMBs and emerging businesses. Plug-and-play setup with customizable consent banners.</p>
+          <p style="font-size: 0.875rem; color: var(--uc-gray-600);">Solopreneurs · Emerging businesses</p>
+          <a href="#" class="link">Core features →</a>
+        </div>
+        <div class="product-visual">Core CMP</div>
+      </div>
+      <div class="product-card">
+        <div>
+          <h3>Usercentrics Advanced CMP</h3>
+          <p>Scalable consent management for fast-growing, multi-brand businesses. Advanced analytics and actionable insights to optimize consent and marketing performance.</p>
+          <p style="font-size: 0.875rem; color: var(--uc-gray-600);">Growing businesses · Enterprises</p>
+          <a href="#" class="link">Advanced features →</a>
+        </div>
+        <div class="product-visual">Advanced CMP</div>
+      </div>
+    </section>
+
+    <section class="scanner-cta">
+      <h2>Check your website or app for privacy compliance</h2>
+      <p>Do you wonder if your website or app is privacy-compliant? Check it now in minutes with our free scanner.</p>
+      <form class="scanner-form" id="scanner-form">
+        <input type="url" placeholder="Your website or app URL" name="url" required>
+        <button type="submit" class="btn btn-primary">Start scan</button>
+      </form>
+    </section>
+
+    <section id="industries">
+      <h2>Find solutions for your industry</h2>
+      <div class="industries">
+        <a href="#" class="industry-card">
+          <h4>Media & Publishing</h4>
+          <p>Grow trust, loyalty, and revenue with privacy-first engagement.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Retail & Ecommerce</h4>
+          <p>Build trust and loyalty while meeting complex compliance standards.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Banking & Finance & Insurance</h4>
+          <p>Our consent-based solutions enable regulatory compliance and long-term client relationships.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Healthcare & Pharmaceuticals</h4>
+          <p>Safeguard sensitive information, enable compliance, and strengthen trust.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Gaming</h4>
+          <p>A transparent consent solution protects ad revenue and gives players true choice.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Education</h4>
+          <p>Enable compliance while giving students and families clear choices over their data.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Automotive</h4>
+          <p>Streamline privacy compliance and support seamless OEM-customer connections.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Travel & Hospitality</h4>
+          <p>Respect traveler preferences and enable ongoing compliance across platforms.</p>
+        </a>
+      </div>
+    </section>
+
+    <section>
+      <h2>What our customers say</h2>
+      <div class="testimonials">
+        <div class="testimonial">
+          <p>We saw huge improvements in Core Web Vitals KPIs, especially for mobile and tablet.</p>
+          <div class="author">Lars Brenncke</div>
+          <div class="role">Lead Business Analyst, Scout24</div>
+          <a href="#" style="font-size: 0.875rem; margin-top: 8px; display: inline-block;">Read case study</a>
+        </div>
+        <div class="testimonial">
+          <p>Honestly, it was click, click, click, done.</p>
+          <div class="author">Kathryn Fletcher</div>
+          <div class="role">Web Application Development Manager, Gilson Inc.</div>
+        </div>
+        <div class="testimonial">
+          <p>We decided to go with Usercentrics because it is easy to integrate and it works great with our Google Tag Manager setup. Besides that, PageSpeed and website performance are very important to us.</p>
+          <div class="author">Marius Rudolph</div>
+          <div class="role">Head of Product, SAG Digital</div>
+        </div>
+        <div class="testimonial">
+          <p>It's important to us to guarantee our users a data protection-compliant online shopping experience. We chose Usercentrics because it meets the highest data protection standards and was easy to integrate.</p>
+          <div class="author">Ann-Kathrin Meyer</div>
+          <div class="role">Product Owner Webshops</div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="stats">
+        <div class="stats-item"><span class="number">2.4M</span><span class="label">websites and apps in 195 countries</span></div>
+        <div class="stats-item"><span class="number">8.8B</span><span class="label">monthly consents</span></div>
+        <div class="stats-item"><span class="number">99%+</span><span class="label">customer retention rate</span></div>
+        <div class="stats-item"><span class="number">4.3/5</span><span class="label">rating on G2</span></div>
+      </div>
+    </section>
+
+    <section>
+      <h2>Discover Usercentrics</h2>
+      <p style="text-align: center; color: var(--uc-gray-600); margin-bottom: 24px;">Watch this short video and learn more about our company and how you can use our expertise to exceed your business goals.</p>
+      <div class="product-visual" style="max-width: 720px; margin: 0 auto; height: 400px;">Video placeholder</div>
+    </section>
+
+    <section id="resources">
+      <h2>Learn how to thrive with Privacy-Led Marketing</h2>
+      <p style="text-align: center; color: var(--uc-gray-600); margin-bottom: 32px;">Explore our insightful blog articles, privacy compliance checklists, online courses, webinars, podcasts, and much more.</p>
+      <div class="industries">
+        <a href="#" class="industry-card">
+          <h4>Article — Is Privacy-Led Marketing the solution to the cookieless future?</h4>
+          <p>Learn how companies can use Privacy-Led Marketing with consent. Improve performance with consent and the data you need.</p>
+        </a>
+        <a href="#" class="industry-card">
+          <h4>Event — Privacy-Led Marketing in the US: Steps you need to take now</h4>
+          <p>Join us for an insightful webinar on new US data privacy legislations.</p>
+        </a>
+      </div>
+    </section>
+
+    <section id="pricing" style="text-align: center; padding: 48px 24px;">
+      <h2>Explore options and prices</h2>
+      <p style="color: var(--uc-gray-600); margin-bottom: 24px;">Explore our pricing plans and find one that matches your business size and needs.</p>
+      <div class="hero-cta">
+        <a href="#" class="btn btn-primary">Contact sales</a>
+        <a href="#" class="btn" style="background: var(--uc-gray-200); color: var(--uc-gray-800);">CHECK PRICING</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      <div>
+        <h4>Products</h4>
+        <a href="#">Usercentrics Web CMP</a>
+        <a href="#">Usercentrics App CMP</a>
+        <a href="#">Usercentrics CTV CMP</a>
+        <a href="#">Privacy Policy Generator</a>
+        <a href="#">Server-Side Tracking</a>
+        <a href="#">Preference Manager</a>
+        <a href="#">Audience Unlocker</a>
+      </div>
+      <div>
+        <h4>Solutions</h4>
+        <a href="#">Data Privacy Compliance</a>
+        <a href="#">Marketing Performance</a>
+        <a href="#">By industry</a>
+      </div>
+      <div>
+        <h4>Regulations</h4>
+        <a href="#">GDPR (EU)</a>
+        <a href="#">CCPA (California)</a>
+        <a href="#">TCF v2.3 (IAB)</a>
+      </div>
+      <div>
+        <h4>Company</h4>
+        <a href="#">About us</a>
+        <a href="#">Careers</a>
+        <a href="#">Contact sales</a>
+      </div>
+    </div>
+    <p style="text-align: center; margin-top: 32px; font-size: 0.8125rem;">© Copyright 2026 Usercentrics GmbH · Terms & Conditions · Privacy Policy</p>
+  </footer>
+
+  <!-- Amplitude: analytics + session replay plugin (per Amplitude docs) -->
+  <script src="https://cdn.amplitude.com/script/0dfd933e176deec9a5634f8acf98b0f0.js"></script>
+  <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.13.10-min.js.gz"></script>
+  <script>
+    (function() {
+      try {
+        if (window.amplitude) {
+          if (window.sessionReplay && typeof window.sessionReplay.plugin === 'function') {
+            window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }));
+          }
+          window.amplitude.init('0dfd933e176deec9a5634f8acf98b0f0', {
+            fetchRemoteConfig: true,
+            autocapture: true
+          });
+        }
+      } catch (e) {
+        console.warn('Amplitude init:', e);
+      }
+    })();
+  </script>
+  <script>
+    // Form submit tracking (autocapture will also get clicks; this ensures form events are clear)
+    document.getElementById('scanner-form').addEventListener('submit', function(e) {
+      e.preventDefault();
+      var url = this.querySelector('input[name="url"]').value;
+      if (window.amplitude && window.amplitude.getInstance) {
+        var inst = window.amplitude.getInstance();
+        if (inst && inst.track) {
+          inst.track('Scan Started', { url: url });
+        }
+      }
+    });
+  </script>
+</body>
+</html>

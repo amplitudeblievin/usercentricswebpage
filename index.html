@@ -35,8 +35,12 @@
     .nav { display: flex; align-items: center; gap: 24px; }
     .nav a { color: var(--uc-gray-800); font-weight: 500; }
     .btn { display: inline-flex; align-items: center; padding: 10px 20px; border-radius: 8px; font-weight: 600; cursor: pointer; border: none; }
-    .btn-primary { background: var(--uc-green); color: white; }
-    .btn-primary:hover { background: var(--uc-green-dark); text-decoration: none; }
+    .btn-primary { background: var(--uc-blue); color: white; }
+    .btn-primary:hover { background: var(--uc-blue-dark); text-decoration: none; }
+    .btn-primary--green { background: var(--uc-green); }
+    .btn-primary--green:hover { background: var(--uc-green-dark); }
+    .btn-primary--blue { background: var(--uc-blue); }
+    .btn-primary--blue:hover { background: var(--uc-blue-dark); }
 
     /* Banner */
     .banner {
@@ -139,7 +143,7 @@
       <a href="#industries">Industries</a>
       <a href="#pricing">Pricing</a>
       <a href="#resources">Resources</a>
-      <a href="#" class="btn btn-primary">Start free</a>
+      <a href="#" id="start-free-btn" class="btn btn-primary btn-primary--blue">Start free</a>
     </nav>
   </header>
 
@@ -428,6 +432,7 @@
   <!-- Amplitude: analytics + session replay plugin (per Amplitude docs) -->
   <script src="https://cdn.amplitude.com/script/0dfd933e176deec9a5634f8acf98b0f0.js"></script>
   <script src="https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.13.10-min.js.gz"></script>
+  <script src="https://unpkg.com/@amplitude/experiment-js-client@1.15.5/dist/experiment.umd.js"></script>
   <script>
     (function() {
       try {
@@ -439,6 +444,23 @@
             fetchRemoteConfig: true,
             autocapture: true
           });
+          if (window.Experiment && typeof window.Experiment.initializeWithAmplitudeAnalytics === 'function') {
+            window.experiment = window.Experiment.initializeWithAmplitudeAnalytics('client-Onyc0aTQX2nv5Sfw5CDbTblYBjdHWSql');
+            window.experiment.fetch().then(function() {
+              var startFree = document.getElementById('start-free-btn');
+              if (!startFree) return;
+              var variant = window.experiment.variant('usercentrics');
+              console.log('Experiment variant:', variant);
+              var value = variant && variant.value ? String(variant.value).toLowerCase() : 'control';
+              if (value === 'treatment') {
+                startFree.classList.remove('btn-primary--blue');
+                startFree.classList.add('btn-primary--green');
+              } else {
+                startFree.classList.remove('btn-primary--green');
+                startFree.classList.add('btn-primary--blue');
+              }
+            });
+          }
         }
       } catch (e) {
         console.warn('Amplitude init:', e);

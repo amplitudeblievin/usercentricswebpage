@@ -1,51 +1,51 @@
 ---
-title: User Guide
+title: Amplitude Implementation Guide
 ---
 
-# User Guide
+# Amplitude Implementation Guide
 
-This guide documents the implementation workflow for the `usercentrics-replica` static site.
+This guide documents how Amplitude is implemented in the `usercentrics-replica` static site.
 
-## Project Overview
+## Where the Implementation Lives
 
-- Single-page static site built in `index.html`
-- Styles live in the `<style>` block in `index.html`
-- No build step or framework required
+- `index.html` contains the Amplitude scripts near the end of the file.
+- Two script tags are used:
+  - Amplitude loader script
+  - Session Replay plugin script
 
-## Local Setup
+## Scripts Included
 
-1. Start a local server from the project folder:
-   - `python -m http.server 8000`
-2. Open the site:
-   - `http://localhost:8000/index.html`
+1. **Amplitude loader**
+   - `https://cdn.amplitude.com/script/0dfd933e176deec9a5634f8acf98b0f0.js`
+2. **Session Replay plugin**
+   - `https://cdn.amplitude.com/libs/plugin-session-replay-browser-1.13.10-min.js.gz`
 
-## Implementation Workflow
+## Initialization Flow
 
-1. **Edit content or layout**
-   - Update HTML in `index.html` (sections, copy, links, CTA text).
-2. **Adjust styling**
-   - Update CSS in the `<style>` block in `index.html`.
-   - Primary buttons use `.btn-primary`.
-3. **Preview changes**
-   - Refresh the browser tab running `http://localhost:8000/index.html`.
+1. Check that `window.amplitude` exists.
+2. If available, add the Session Replay plugin:
+   - `window.amplitude.add(window.sessionReplay.plugin({ sampleRate: 1 }))`
+3. Initialize Amplitude:
+   - `window.amplitude.init('0dfd933e176deec9a5634f8acf98b0f0', { fetchRemoteConfig: true, autocapture: true })`
+4. Errors are caught and logged to console as `Amplitude init:`.
 
-## Styling Conventions
+## Event Tracking
 
-- Design tokens are defined under `:root` in `index.html`.
-- Primary buttons are green:
-  - Use `--uc-green` for normal state.
-  - Use `--uc-green-dark` for hover state.
+- The form with id `scanner-form` is tracked on submit.
+- Default submit is prevented to keep the site static.
+- Event tracked: `Scan Started` with payload `{ url }`.
 
-## Common Tasks
+## How to Modify
 
-- **Change the header CTA text**
-  - Edit the “Start free” link in the `<header>` navigation.
-- **Add a new section**
-  - Copy an existing `<section>` block and adjust headings/content.
-- **Update CTA colors**
-  - Modify `.btn-primary` or add a new button class.
+- **Change the API key**
+  - Update the key passed to `window.amplitude.init(...)`.
+- **Adjust session replay sampling**
+  - Edit `sampleRate` in the session replay plugin.
+- **Add custom events**
+  - Call `inst.track('Event Name', { ...props })` where needed.
 
 ## Troubleshooting
 
-- If the page doesn’t load, confirm the server is running and the URL is correct.
-- If styles don’t apply, check for typos in class names or CSS selectors.
+- If events don’t appear, confirm the scripts load in the browser.
+- If `window.amplitude` is undefined, the loader script is blocked or failed to load.
+- If the form event is missing, confirm the `scanner-form` id matches in HTML.

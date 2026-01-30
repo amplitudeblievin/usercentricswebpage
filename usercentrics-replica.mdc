@@ -1,9 +1,0 @@
----
-description: Project notes for usercentrics-replica
-alwaysApply: true
----
-
-# Usercentrics Replica Notes
-
-- This is a static single-page site with primary styles defined in `index.html`.
-- Primary buttons (`.btn-primary`) should be green, using `--uc-green` and `--uc-green-dark`.
